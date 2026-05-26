@@ -1,0 +1,70 @@
+.itemsNote{
+
+    width: 100%;
+    background-color: #f1f1f1;
+    border:1px solid #dbdbdb;
+    border-radius: 5px;
+    padding: 10px;
+    margin-bottom: 20px;
+    height:50px;
+    font-family: 'Montserrat', sans-serif;
+    display: flex;
+    /* flex-direction: ; */
+    align-items: center;
+    justify-content: space-between;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+}
+.inputNote{
+    width: 90%;
+    height: 100%;
+    padding: 10px;
+    /* margin-bottom: 20px; */
+    border: none;
+    outline: none;
+    font-size: 14px;
+    background-color: transparent;
+    font-family: 'Montserrat', sans-serif;
+    text-align: left;
+}
+.buttonRemove{
+    background: none;
+    border: none;
+    color: #1f1f1f;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+@media (max-width: 768px) {
+    .itemsNote {
+        padding: 8px;
+        margin-bottom: 16px;
+        height: 45px;
+    }
+
+    .inputNote {
+        padding: 8px;
+        font-size: 13px;
+    }
+
+    .buttonRemove {
+        font-size: 14px;
+    }
+}
+
+@media (max-width: 520px) {
+    .itemsNote {
+        padding: 6px;
+        margin-bottom: 12px;
+        height: 40px;
+    }
+
+    .inputNote {
+        padding: 6px;
+        font-size: 12px;
+    }
+
+    .buttonRemove {
+        font-size: 12px;
+    }
+}

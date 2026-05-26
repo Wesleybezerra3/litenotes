@@ -1,0 +1,79 @@
+.container{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    min-height: 100vh;
+}
+.headerHome{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    margin-bottom: -10px;
+}
+.headerHome h1{
+    color: #4CAF50;
+    font-size: 24px;
+    font-family:'Baloo 2', sans-serif;
+    font-weight: bold;
+}
+
+.btnNote{
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px 20px;
+    text-align: center;
+    border: none;
+    border-radius: 4px;
+    font-size: 12px;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 500;
+    cursor: pointer;
+    /* width: 100px; */
+    /* height: 30px; */
+    transition: all 0.2s ease-in-out;
+}
+
+.btnNote:hover{
+    box-shadow: 5px 5px 0px #4CAF50;
+    background-color: #f4f4f4;
+    color: #4CAF50;
+    border: 1px solid #4CAF50;
+}
+.sectionNotes{
+    width: 100%;
+    max-width: 1160px;
+    margin: 20px auto 0;
+    padding: 0 1rem;
+}
+.cardsNotes{
+        /* masonry-like layout usando 2 colunas fixas */
+        column-count: 2;
+        column-gap: 1rem;
+        column-fill: balance;
+        margin: 0;
+}
+
+@media (max-width: 768px) {
+    .headerHome {
+        padding: 15px;
+    }
+
+    .headerHome h1 {
+        font-size: 20px;
+    }
+
+    .btnNote {
+        padding: 8px 16px;
+        font-size: 11px;
+    }
+
+    .sectionNotes {
+        margin: 15px auto 0;
+        padding: 0 0.5rem;
+    }
+
+    .cardsNotes {
+        column-count: 1;
+    }
+}
