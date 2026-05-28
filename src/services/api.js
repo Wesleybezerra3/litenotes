@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const api = axios.create({
-    baseURL:'https://lite-notes-server-rra7.vercel.app'
+    baseURL: 'http://localhost:8180'
 });
-// 'https://chatnode-dxiq.onrender.com'
+// 'https://lite-notes-server-rra7.vercel.app'
 export default api;

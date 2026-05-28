@@ -1,0 +1,14 @@
+.sectionNotes{
+    width: 100%;
+    max-width: 1160px;
+    margin: 20px auto 0;
+    padding: 0 1rem;
+}
+.cardsNotes{
+        margin: 0;
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 1rem;
+
+        /* padding: 0 1rem; */
+}

@@ -1,132 +1,171 @@
-.cardNotes{
-    background-color: #e4e4e4; 
-    width: 100%;
-    /* color: #252525; */
-    margin-bottom: 0.75rem;
-    display: inline-block;
-    box-sizing: border-box;
-    -webkit-column-break-inside: avoid;
-    break-inside: avoid;
-    box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.1);
-    /* cursor: pointer; */
-    cursor: grab;
-    /* border-radius: 0px; */
-    overflow: hidden;
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
-    color: #1f1f1f;
+.cardNotes {
+  background-color: var(--card-background);
+  border: 1px solid var(--border-color);
+  width: 300px;
+   height: 280px;
+  /* color: #252525; */
+  margin-bottom: 0.75rem;
+  display: inline-block;
+  box-sizing: border-box;
+  -webkit-column-break-inside: avoid;
+  break-inside: avoid;
+  box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.1);
+  /* cursor: pointer; */
+  cursor: pointer;
+  /* border-radius: 0px; */
+  overflow: hidden;
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+  color: #1f1f1f;
 }
-.cardNotes:hover{
-    transform: translateY(-2px);
-    box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.041);
-}
-
-.headerCardNotes{
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    flex-wrap: wrap;
-    gap: 0.5rem;
-    margin-bottom: 10px;
-    font-family: 'Baloo 2', sans-serif;
-    font-weight: 600;
-    width: 100%;
-    padding: 16px 16px 12px;
-    border-bottom: 2px solid #838383;
+.cardNotes:hover {
+  transform: translateY(-2px);
+  box-shadow: 0px 0px 10px rgba(133, 133, 133, 0.61);
 }
 
-.headerCardNotes p{
-    margin: 0;
-    font-size: 1rem;
-    word-break: break-word;
- display: -webkit-box;
+.headerCardNotes {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  /* flex-wrap: wrap; */
+  gap: 0.5rem;
+  margin-bottom: 10px;
+  font-family: "Baloo 2", sans-serif;
+  font-weight: 600;
+  width: 100%;
+  padding: 16px 16px 12px;
+  border-bottom: 2px solid var(--border-color);
+}
+
+
+.info {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  color: var(--text-color);
+  width: 150px;
+}
+.status {
+  display: flex;
+  align-items: center;
+  justify-content: top;
+  gap: 4px;
+  height: 100%;
+  width: 50px;
+}
+.status p {
+  font-size: 0.8rem;
+  font-weight: 300;
+  color: #4CAF50;
+}
+.titleCardNotes {
+    font-size: 0.8rem;
+  word-break: break-word;
+  display: -webkit-box;
   -webkit-line-clamp: 1;
   -webkit-box-orient: vertical;
 
   overflow: hidden;
-
 }
 
-.bodyCardNotes{
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-    padding: 12px 16px 16px;
+.relativeTime {
+  font-size: 0.8rem;
+  color: var(--gray);
 }
 
-.bodyCardNotes p{
-    margin: 0;
-    /* overflow: hidden;
-    text-overflow: ellipsis;
-    display: -webkit-box;
-    -webkit-line-clamp: 4;
-    -webkit-box-orient: vertical; */
-    line-height: 1.5;
-    max-height: calc(1.5em * 4);
-    font-size: 0.9rem;
-    font-family: 'Montserrat', sans-serif;
-    font-weight: 500;
-    word-break: break-word;
-     display: -webkit-box;
-  -webkit-line-clamp: 4;
+.bodyCardNotes {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  padding: 12px 16px 16px;
+}
+
+.bodyCardNotes ul {
+  color: var(--text-color);
+}
+.bodyCardNotes li {
+  margin: 0;
+  /* text-decoration:dotted; */
+  color: var(--text-color);
+  line-height: 1.5;
+  max-height: calc(1.5em * 4);
+  font-size: 0.9rem;
+  font-family: "Montserrat", sans-serif;
+  font-weight: 500;
+  word-break: break-word;
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
   -webkit-box-orient: vertical;
-  
 
   overflow: hidden;
 }
+.bodyCardNotes li span {
+  display: inline-block;
+  margin-right: 8px;
+}
+.qtdItems {
+  /* background-color: rgba(0, 0, 0, 0.6); */
+  color: var(--text-color);
+  font-family: "Montserrat", sans-serif;
+    font-weight: 500;
+  padding: 2px 6px;
+  border-radius: 12px;
+  font-size: 0.80rem;
+}
 
 @media (max-width: 768px) {
-    .cardNotes {
-        margin-bottom: 0.6rem;
-    }
+  .cardNotes {
+    margin-bottom: 0.6rem;
+  }
 
-    .headerCardNotes {
-        padding: 14px 14px 10px;
-        gap: 0.4rem;
-    }
+  .headerCardNotes {
+    padding: 14px 14px 10px;
+    gap: 0.4rem;
+  }
 
-    .bodyCardNotes {
-        padding: 12px 14px 14px;
-        gap: 6px;
-    }
+  .bodyCardNotes {
+    padding: 12px 14px 14px;
+    gap: 6px;
+  }
 
-    .headerCardNotes p {
-        font-size: 0.9rem;
-    }
+  .headerCardNotes p {
+    font-size: 0.9rem;
+  }
 
-    .bodyCardNotes p {
-        font-size: 0.85rem;
-        max-height: calc(1.4em * 3);
-        -webkit-line-clamp: 3;
-    }
+  .bodyCardNotes p {
+    font-size: 0.85rem;
+    max-height: calc(1.4em * 3);
+    -webkit-line-clamp: 3;
+  }
 }
 
 @media (max-width: 520px) {
-    .cardNotes {
-        margin-bottom: 0.5rem;
-    }
+  .cardNotes {
+    margin-bottom: 0.5rem;
+  }
 
-    .headerCardNotes {
-        padding: 10px 10px 8px;
-        gap: 0.3rem;
-    }
+  .headerCardNotes {
+    padding: 10px 10px 8px;
+    gap: 0.3rem;
+  }
 
-    .bodyCardNotes {
-        padding: 8px 10px 10px;
-        gap: 4px;
-    }
+  .bodyCardNotes {
+    padding: 8px 10px 10px;
+    gap: 4px;
+  }
 
-    .headerCardNotes p {
-        font-size: 0.75rem;
-    }
+  .headerCardNotes p {
+    font-size: 0.75rem;
+  }
 
-    .bodyCardNotes p {
-        font-size: 0.7rem;
-        max-height: calc(1.3em * 2);
-        -webkit-line-clamp: 2;
-    }
+  .bodyCardNotes p {
+    font-size: 0.7rem;
+    max-height: calc(1.3em * 2);
+    -webkit-line-clamp: 2;
+  }
 }
 
-
 .cardsNotes:active {
-  cursor: grabbing;
+  cursor: pointer;
 }
