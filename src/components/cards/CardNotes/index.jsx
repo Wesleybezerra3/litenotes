@@ -80,12 +80,12 @@ const CardNotes = ({ title, content, date }) => {
               <p className={style.relativeTime}>{relativeTime}</p>
             </div>
           </div>
-          <div className={style.status}>
+          {/* <div className={style.status}>
             <div>
               <FontAwesomeIcon icon={faCheckCircle} color="#4CAF50" />
             </div>
             <p>Salvo</p>
-          </div>
+          </div> */}
         </div>
 
         <div className={style.contentCardNotes}>

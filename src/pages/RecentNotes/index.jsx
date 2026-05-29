@@ -2,19 +2,22 @@ import { useEffect, useState } from "react";
 import SortableCard from "../../components/SortableCard";
 import api from "../../services/api";
 import style from "./style.module.css";
- import { DndContext, closestCenter } from "@dnd-kit/core";
+import { DndContext, closestCenter } from "@dnd-kit/core";
 
-  import {
-    arrayMove,
-    SortableContext,
-    verticalListSortingStrategy,
-  } from "@dnd-kit/sortable";
+import {
+  arrayMove,
+  SortableContext,
+  verticalListSortingStrategy,
+} from "@dnd-kit/sortable";
 
+import {
+  restrictToParentElement,
+  restrictToWindowEdges
+} from "@dnd-kit/modifiers";
 
 const RecentNotes = () => {
   const [notes, setNotes] = useState([]);
 
- 
   useEffect(() => {
     const getNotes = async () => {
       try {
@@ -57,6 +60,7 @@ const RecentNotes = () => {
         <DndContext
           collisionDetection={closestCenter}
           onDragEnd={handleDragEnd}
+          modifiers={[restrictToParentElement, restrictToWindowEdges]}
         >
           <SortableContext items={notes} strategy={verticalListSortingStrategy}>
             <div className={style.cardsNotes}>

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faUser,
@@ -7,8 +7,9 @@ import {
   faStar,
   faTrash,
   faFolder,
+  faSearch,
 } from "@fortawesome/free-solid-svg-icons";
-
+import { UserContext } from "../../context/Context";
 import logo from "../../assets/logo.svg";
 
 import { DndContext, closestCenter } from "@dnd-kit/core";
@@ -28,8 +29,9 @@ import { Link, Outlet, useLocation } from "react-router-dom";
 const Home = () => {
   const [notes, setNotes] = useState([]);
   const [modalVisible, setModalVisible] = useState(false);
+  const { user } = useContext(UserContext);
 
-        const location = useLocation();
+  const location = useLocation();
 
   const [activeRoute, setActiveRoute] = useState("");
 
@@ -40,8 +42,10 @@ const Home = () => {
   }, [location.pathname]);
 
   useEffect(() => {
+    console.log(user);
     const getNotes = async () => {
       try {
+        //  const token = localStorage.getItem("token");
         const response = await api.get("api/notes");
 
         const data = response.data;
@@ -162,7 +166,7 @@ const Home = () => {
             <div className={style.containerProfile}>
               <div className={style.imgProfile}></div>
               <div className={style.infoProfile}>
-                <h3>John Doe</h3>
+                <h3>{user.nome}</h3>
                 <p>email@example.com</p>
               </div>
 
@@ -176,8 +180,24 @@ const Home = () => {
         </div>
 
         <div className={style.containerContent}>
+          <div className={style.headerContent}>
+            <p>👋 Bem-vindo, {user.nome.split(" ")[0]}!</p>
+          </div>
+          <div className={style.titlePage}>
+            <h1>Notas Recentes</h1>
+          </div>
+          <div className={style.containerSearch}>
+            <div className={style.search}>
+              <div className={style.containerIcon}>
+              <FontAwesomeIcon icon={faSearch} />
+
+              </div>
+              <input type="text" placeholder="Pesquisar nota..." />
+            </div>
+
+              <button className={style.btnNoteNew}>+ Adicionar nota</button>
+          </div>
           <Outlet />
-         
         </div>
       </main>
       {/* 

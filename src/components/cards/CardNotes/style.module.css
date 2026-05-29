@@ -44,7 +44,7 @@
   flex-direction: column;
   gap: 4px;
   color: var(--text-color);
-  width: 150px;
+  /* width: 150px; */
 }
 .status {
   display: flex;

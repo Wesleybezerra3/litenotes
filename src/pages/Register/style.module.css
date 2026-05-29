@@ -95,35 +95,6 @@ label {
   transform: translateY(0);
 }
 
-.footer {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 12px;
-  width: 100%;
-  max-width: 400px;
-  margin-top: 20px;
-  font-size: 14px;
-  font-family: 'Montserrat', sans-serif;
-}
-
-.footer p {
-  color: var(--gray);
-  margin: 0;
-}
-
-.footer a {
-  color: var(--pupple);
-  text-decoration: none;
-  font-weight: 600;
-  transition: color 0.2s ease-in-out;
-}
-
-.footer a:hover {
-  color: #7a63f0;
-  text-decoration: underline;
-}
-
 @media (max-width: 768px) {
   .container {
     padding: 20px 15px;

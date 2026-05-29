@@ -5,10 +5,14 @@
     min-height: 100vh;
 }
 .containerMenu{
+    position: fixed;
+    left: 0;
+    top: 0;
     width: 250px;
     height: 100vh;
     /* background-color: #f4f4f4; */
     border-right: 0.5px solid #1D212B;
+    z-index: 100;
 }
 .logo{
     width: 150px;
@@ -100,19 +104,107 @@
     /* border: 1px solid #131923; */
 }
 
-.headerHome{
+.headerContent{
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 20px;
-    margin-bottom: -10px;
+    padding: 10px;
+    border-radius: 4px;
+    margin-top: 20px;
+    /* margin-bottom: -10px; */
+    border-bottom: 0.5px solid var(--border-color);
+    background-color: var(--card-background);
 }
-/* .headerHome h1{
-    color: #4CAF50;
-    font-size: 24px;
-    font-family:'Baloo 2', sans-serif;
-    font-weight: bold;
-} */
+.containerContent{
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: start;
+    width: 100%;
+    margin-left: 250px;
+    padding: 20px;
+}
+
+ .headerContent p{
+    color: var(--text-color);
+    font-size: 0.8rem;
+    font-family:'Geist', sans-serif;
+    font-weight: 400;
+
+} 
+.titlePage{
+    font-family: 'Geist', sans-serif;
+    color: var(--text-color);
+    width: 100%;
+    margin-left: 30px;
+}
+.titlePage h1{
+       font-size: 1.5rem;
+    font-weight: 500; 
+}
+.containerSearch{
+    /* margin-left: 30px; */
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 10px;
+    margin-bottom: 5px;
+}
+.containerIcon{
+    color: var(--text-color);
+}
+.search{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+.containerIcon{
+   position: absolute;
+  left: 1rem;
+  fill: #bdbecb;
+  width: 1rem;
+  height: 1rem;
+  pointer-events: none;
+  z-index: 1;
+}
+.containerSearch  input{
+    width: 500px;
+    /* padding: 0px 15px ; */
+    border-radius: 0px 5px 5px 0px;
+    font-family: 'Montserrat', sans-serif;
+    padding: 15px;
+    padding-left: 3em;
+    outline: none;
+    border-right:none; 
+    border: 1px solid var(--border-color);
+    background-color: var(--card-background);
+    height: 40px;
+    color: var(--text-color);
+}
+.search > input:hover{
+  box-shadow: 0px 0px 10px rgba(133, 133, 133, 0.61);
+}
+.btnNoteNew{
+    padding: 10px 15px;
+    border: none;
+    background-color: var(--pupple);
+    color: var(--text-color);
+    font-family: 'Geist', sans-serif;
+    font-size: 0.9em;
+    font-weight: 600;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: 0.3s ease-in-out;
+    
+}
+.btnNoteNew:hover{
+  transform: translateY(-2px);
+  box-shadow: 0px 0px 10px rgba(180, 180, 180, 0.61);
+
+}
 
 /* .btnNote{
     background-color: #4CAF50;
