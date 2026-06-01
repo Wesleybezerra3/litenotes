@@ -7,9 +7,14 @@ export const AppProvider = ({ children }) => {
     id: "",
     nome: "",
   });
+   const [activeRoute, setActiveRoute] = useState("");
+
+  // useEffect(()=>{
+
+  // },[onUpdate])
   const logUser = (userData) => setUser(userData);
   return (
-    <UserContext.Provider value={{ user, logUser }}>
+    <UserContext.Provider value={{ user, logUser, activeRoute, setActiveRoute }}>
         {children}
     </UserContext.Provider>
   );

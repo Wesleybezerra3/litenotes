@@ -29,11 +29,10 @@ import { Link, Outlet, useLocation } from "react-router-dom";
 const Home = () => {
   const [notes, setNotes] = useState([]);
   const [modalVisible, setModalVisible] = useState(false);
-  const { user } = useContext(UserContext);
+  const { user, activeRoute, setActiveRoute } = useContext(UserContext);
 
   const location = useLocation();
 
-  const [activeRoute, setActiveRoute] = useState("");
 
   useEffect(() => {
     const route = location.pathname.split("/")[2];
@@ -79,6 +78,12 @@ const Home = () => {
     }
   };
 
+  const logout = () => {
+    localStorage.removeItem("token");
+    window.location.reload();
+  };
+
+ 
   return (
     <>
       <ModalNote
@@ -164,18 +169,20 @@ const Home = () => {
             </div>
 
             <div className={style.containerProfile}>
-              <div className={style.imgProfile}></div>
+              <div className={style.imgProfile}>
+                <FontAwesomeIcon icon={faUser} color="#fff" size="1x" />
+              </div>
               <div className={style.infoProfile}>
                 <h3>{user.nome}</h3>
                 <p>email@example.com</p>
               </div>
 
-              <div className={style.btnLogout}>
-                <button>
+            </div>
+            <div className={style.btnLogout}>
+                <button onClick={logout}>
                   <FontAwesomeIcon icon={faSignOutAlt} className={style.icon} />
                 </button>
               </div>
-            </div>
           </aside>
         </div>
 
@@ -184,7 +191,7 @@ const Home = () => {
             <p>👋 Bem-vindo, {user.nome.split(" ")[0]}!</p>
           </div>
           <div className={style.titlePage}>
-            <h1>Notas Recentes</h1>
+            <h1>{activeRoute === "recent-notes" ? "Notas Recentes" : activeRoute === "favorites" ? "Favoritos" : "Lixeira"}</h1>
           </div>
           <div className={style.containerSearch}>
             <div className={style.search}>
@@ -195,7 +202,9 @@ const Home = () => {
               <input type="text" placeholder="Pesquisar nota..." />
             </div>
 
-              <button className={style.btnNoteNew}>+ Adicionar nota</button>
+              <button className={style.btnNoteNew} onClick={() => setModalVisible(true)}>
+                + Adicionar nota
+              </button>
           </div>
           <Outlet />
         </div>

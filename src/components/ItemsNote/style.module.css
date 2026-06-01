@@ -30,9 +30,21 @@
 .buttonRemove{
     background: none;
     border: none;
-    color: #1f1f1f;
+    color: #888;
     cursor: pointer;
     font-size: 16px;
+}
+.actions{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+}
+.iconDrag{
+    cursor: grab;
+}
+.iconDrag:active{
+    cursor: grabbing;
 }
 
 @media (max-width: 768px) {

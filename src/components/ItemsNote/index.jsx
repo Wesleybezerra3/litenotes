@@ -1,11 +1,12 @@
 import React from "react";
+import { useState, useEffect } from "react";
 import style from "./style.module.css";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faBraille } from '@fortawesome/free-solid-svg-icons'
 import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
 
-const ItemsNote = ({ id, onRemove }) => {
+const ItemsNote = ({ id, onRemove, items, valor, onUpdateValue }) => {
     const {
         attributes,
         listeners,
@@ -21,22 +22,36 @@ const ItemsNote = ({ id, onRemove }) => {
         transition,
     };
 
+
+    const handlePointerDown = (e) => {
+        e.stopPropagation();
+    };
+
     return(
         <>
             <div 
                 ref={setNodeRef}
                 style={sortableStyle}
-                {...attributes}
-                {...listeners}
+                // {...attributes}
+                // {...listeners}
                 className={style.itemsNote}
             >
-                <input type="text" placeholder="Digite sua nota..." className={style.inputNote}>
-                </input>
-                <div>
+                <input 
+                    type="text" 
+                    placeholder="Digite sua nota..." 
+                    className={style.inputNote} 
+                    value={valor}
+                    onChange={(e) => onUpdateValue(id, e.target.value)}
+                    onPointerDown={handlePointerDown}
+                />
+                <div className={style.actions}>
+                    <div className={style.iconDrag} {...listeners} {...attributes}>
+                        <FontAwesomeIcon icon={faBraille} className={style.iconDrag} color="#888" size="sm" />
+                    </div>
                     {onRemove && (
                         <button
                             type="button"
-                            onClick={() => onRemove(id)}
+                            onClick={() => items.length <= 1 ? null : onRemove(id)}
                             className={style.buttonRemove}
                         >
                             ✕

@@ -9,6 +9,7 @@
     align-items: center;
     flex-direction: column;
     padding: 20px;
+    z-index: 1000;
 }
 .modalHeader{
     display: flex;
@@ -16,7 +17,7 @@
     align-items: center;
     /* margin-bottom: 20px; */
     padding: 8px 20px;
-    width: 100%;
+    width: 500px;
     background-color: #f7f7f7;
     border-radius: 5px 5px 0px 0px;
     font-family: 'Baloo 2', sans-serif;
@@ -36,7 +37,7 @@
 }
 
 .modalForm{
-    width: 100%;
+    width: 500px;
     background-color: #f7f7f7;
     border-radius: 0px 0px 5px 5px;
     /* box-shadow: 10px 10px 0px #4CAF50; */
@@ -55,8 +56,8 @@
     outline: none;
 }
 .buttonForm{
-    background-color: #4CAF50;
-    color: white;
+    background-color: var(--pupple);
+    color: var(--text-color);
     padding: 10px 20px;
     text-align: center;
     border: none;
@@ -67,12 +68,12 @@
     cursor: pointer;
     transition: all 0.2s ease-in-out;
 }
-.buttonForm:hover{
+/* .buttonForm:hover{
     box-shadow: 5px 5px 0px #4CAF50;
     background-color: #ffffff;
     color: #4CAF50;
     border: 1px solid #4CAF50;
-}
+} */
 
 @media (max-width: 768px) {
     .modalNote {

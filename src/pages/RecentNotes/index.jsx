@@ -12,8 +12,9 @@ import {
 
 import {
   restrictToParentElement,
-  restrictToWindowEdges
+  restrictToWindowEdges,
 } from "@dnd-kit/modifiers";
+import NotCreateNote from "../../components/NotCreateNote";
 
 const RecentNotes = () => {
   const [notes, setNotes] = useState([]);
@@ -63,11 +64,15 @@ const RecentNotes = () => {
           modifiers={[restrictToParentElement, restrictToWindowEdges]}
         >
           <SortableContext items={notes} strategy={verticalListSortingStrategy}>
-            <div className={style.cardsNotes}>
-              {notes.map((note) => (
-                <SortableCard key={note.id} note={note} />
-              ))}
-            </div>
+            {notes.length === 0 ? (
+              <NotCreateNote title="Nenhuma nota por aqui" subtitle="Você ainda não criou nenhuma nota." description='Clique em \" + Adicionar nota\" para começar!' />
+            ) : (
+              <div className={style.cardsNotes}>
+                {notes.map((note) => (
+                  <SortableCard key={note.id} note={note} />
+                ))}
+              </div>
+            )}
           </SortableContext>
         </DndContext>
       </section>
