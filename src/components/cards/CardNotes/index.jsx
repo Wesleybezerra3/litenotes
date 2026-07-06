@@ -5,6 +5,7 @@ import {
   faCheckCircle,
   faFileArchive,
   faCircle,
+  faGripVertical,
 } from "@fortawesome/free-solid-svg-icons";
 
 const getRelativeTime = (dateString) => {
@@ -44,32 +45,37 @@ const getRelativeTime = (dateString) => {
   return `última edição: ${diffYears} ano${diffYears === 1 ? "" : "s"}`;
 };
 
-const CardNotes = ({ title, content, date }) => {
+const CardNotes = ({ id, title, content, date, onCardClick, dragListeners }) => {
   const relativeTime = getRelativeTime(date);
-  const [qtdItems, setQtdItems] = useState('');
+  const [qtdItems, setQtdItems] = useState("");
   const [listItems, setListItems] = useState([]);
 
-  useEffect(()=>{
-    if(content.length > 0) {
-      setQtdItems(prev => content.length);
+  useEffect(() => {
+    if (content.length > 0) {
+      setQtdItems((prev) => content.length);
     }
-  
-  }, [content])
+  }, [content]);
 
   useEffect(() => {
     const getListItems = () => {
-      if(content.length > 0) {
-        setListItems(content.map(item => item.texto).slice(0, 3));
+      if (content.length > 0) {
+        setListItems(content.map((item) => item.texto).slice(0, 3));
       }
-    }
+    };
     getListItems();
-  }, [content])
-  
+  }, [content]);
 
-    console.log(qtdItems + '   ' + listItems);
+  const openNote = () => {
+    console.log("Nota aberta:",id, title, content, date);
+    if (onCardClick) {
+      onCardClick({ id, title, content, date });
+    }
+  };
+
+  // console.log(qtdItems + '   ' + listItems);
   return (
     <>
-      <article className={style.cardNotes}>
+      <article className={style.cardNotes} onClick={openNote}>
         <div className={style.headerCardNotes}>
           <div style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
             <div>
@@ -80,6 +86,12 @@ const CardNotes = ({ title, content, date }) => {
               <p className={style.relativeTime}>{relativeTime}</p>
             </div>
           </div>
+          {dragListeners && (
+            <div className={style.dragHandle} {...dragListeners}>
+              <FontAwesomeIcon icon={faGripVertical} color="#999" size="sm" />
+            </div>
+          )}
+
           {/* <div className={style.status}>
             <div>
               <FontAwesomeIcon icon={faCheckCircle} color="#4CAF50" />
@@ -94,7 +106,6 @@ const CardNotes = ({ title, content, date }) => {
                 </div> */}
 
           <div className={style.bodyCardNotes}>
-            
             {listItems.map((item, i) => (
               <ul>
                 <li key={i}>
@@ -110,9 +121,7 @@ const CardNotes = ({ title, content, date }) => {
               </ul>
             ))}
             <div className={style.qtdItems}>
-              <p>
-                 {qtdItems > 3 ? `+${qtdItems - 3} conteúdos` : ''}
-              </p>
+              <p>{qtdItems > 3 ? `+${qtdItems - 3} conteúdos` : ""}</p>
               {/* {qtdItems > 3 && `+${qtdItems - 3} item${qtdItems - 3 > 1 ? 's' : ''}...`} */}
             </div>
           </div>

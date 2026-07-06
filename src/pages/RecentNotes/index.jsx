@@ -1,8 +1,10 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import SortableCard from "../../components/SortableCard";
 import api from "../../services/api";
 import style from "./style.module.css";
 import { DndContext, closestCenter } from "@dnd-kit/core";
+import { UserContext } from "../../context/Context";
+
 
 import {
   arrayMove,
@@ -15,9 +17,12 @@ import {
   restrictToWindowEdges,
 } from "@dnd-kit/modifiers";
 import NotCreateNote from "../../components/NotCreateNote";
+import ViewNote from "../../components/ViewNote";
+
 
 const RecentNotes = () => {
   const [notes, setNotes] = useState([]);
+  const { openNote,setOpenNote, openNoteData, setOpenNoteData } = useContext(UserContext);
 
   useEffect(() => {
     const getNotes = async () => {
@@ -31,6 +36,7 @@ const RecentNotes = () => {
           : data?.notes?.reverse() || [];
 
         setNotes(normalized);
+        console.log("Notas recentes:", normalized);
       } catch (error) {
         console.error(error);
       }
@@ -55,8 +61,17 @@ const RecentNotes = () => {
     }
   };
 
+  const handleCardClick = (noteData) => {
+     console.log("Card clicado:", noteData);
+      setOpenNote(true);
+      setOpenNoteData(noteData);
+    // Aqui você pode abrir um modal, navegar para página de edição, etc
+  };
+  
+
   return (
     <>
+      <ViewNote />
       <section className={style.sectionNotes}>
         <DndContext
           collisionDetection={closestCenter}
@@ -65,11 +80,19 @@ const RecentNotes = () => {
         >
           <SortableContext items={notes} strategy={verticalListSortingStrategy}>
             {notes.length === 0 ? (
-              <NotCreateNote title="Nenhuma nota por aqui" subtitle="Você ainda não criou nenhuma nota." description='Clique em \" + Adicionar nota\" para começar!' />
+              <NotCreateNote
+                title="Nenhuma nota por aqui"
+                subtitle="Você ainda não criou nenhuma nota."
+                description='Clique em \" + Adicionar nota\" para começar!'
+              />
             ) : (
               <div className={style.cardsNotes}>
                 {notes.map((note) => (
-                  <SortableCard key={note.id} note={note} />
+                  <SortableCard
+                    key={note.id}
+                    note={note}
+                    onCardClick={handleCardClick}
+                  />
                 ))}
               </div>
             )}

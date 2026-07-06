@@ -2,7 +2,7 @@ import React from "react";
 import { useState, useEffect } from "react";
 import style from "./style.module.css";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faBraille } from '@fortawesome/free-solid-svg-icons'
+import { faBraille, faClose } from '@fortawesome/free-solid-svg-icons'
 import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
 
@@ -54,7 +54,7 @@ const ItemsNote = ({ id, onRemove, items, valor, onUpdateValue }) => {
                             onClick={() => items.length <= 1 ? null : onRemove(id)}
                             className={style.buttonRemove}
                         >
-                            ✕
+                            <FontAwesomeIcon icon={faClose}/>
                         </button>
                     )}
                 </div>

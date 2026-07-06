@@ -2,7 +2,7 @@ import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
 import CardNotes from "./cards/CardNotes";
 
-const SortableCard = ({ note }) => {
+const SortableCard = ({ note, onCardClick }) => {
   const {
     attributes,
     listeners,
@@ -18,17 +18,25 @@ const SortableCard = ({ note }) => {
     transition,
   };
 
+  const handleCardClick = (noteData) => {
+    if(onCardClick) {
+      onCardClick(noteData);
+    }
+  };
+
   return (
     <div
       ref={setNodeRef}
       style={style}
       {...attributes}
-      {...listeners}
     >
       <CardNotes
+        id={note.id}
         title={note.titulo}
         content={note.conteudos}
         date={note.criadaEm}
+        onCardClick={handleCardClick}
+        dragListeners={listeners}
       />
     </div>
   );

@@ -15,6 +15,7 @@ import Trash from "./pages/TrashPage";
 import Favorites from "./pages/Favorites";
 import NotFound from "./pages/NotFound";
 import PrivateRouter from "./components/PrivateRoute";
+import { Toaster } from 'sonner' 
 
 // import {
 //   arrayMove,
@@ -26,6 +27,7 @@ function App() {
   return (
     <>
       <Router>
+         <Toaster expand={true} richColors />
         <Routes>
           <Route element={<PrivateRouter />}>
             <Route path="/home" element={<Home />}>

@@ -2,6 +2,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import api from '../../services/api';
 import style from './style.module.css';
+import { Toaster , toast } from 'sonner' 
 
 const Login = () => {
   const [formData, setFormData] = useState({
@@ -27,7 +28,7 @@ const Login = () => {
     e.preventDefault();
 
     if (!formData.email || !formData.senha) {
-      alert("Por favor, preencha todos os campos!");
+      toast.warning("Preencha todos os campos!");
       return;
     }
 
@@ -38,18 +39,18 @@ const Login = () => {
       });
 
       console.log("Login realizado com sucesso:", response.data);
-      alert("Login realizado com sucesso!");
-      
-      // Salvar token se necessário
+      toast.success("Login realizado com sucesso!");
+
       if (response.data.token) {
         saveToken(response.data.token);
       }
       
       setFormData({ email: "", senha: "" });
-      navigate("/home");
+        navigate("/home");
+      // navigate("/home");
     } catch (error) {
       console.error("Erro ao fazer login:", error);
-      alert("Email ou senha incorretos!");
+      toast.error("Email ou senha incorretos!");
     }
   };
 
@@ -102,7 +103,7 @@ const Login = () => {
             required
           />
         </div>
-
+     
         <button type="submit">Entrar</button>
       </form>
 

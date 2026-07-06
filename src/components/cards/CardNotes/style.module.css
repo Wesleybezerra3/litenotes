@@ -38,6 +38,24 @@
   border-bottom: 2px solid var(--border-color);
 }
 
+.dragHandle {
+  cursor: grab;
+  padding: 4px 8px;
+  border-radius: 4px;
+  transition: background-color 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.dragHandle:hover {
+  background-color: rgba(0, 0, 0, 0.05);
+}
+
+.dragHandle:active {
+  cursor: grabbing;
+}
+
 
 .info {
   display: flex;
