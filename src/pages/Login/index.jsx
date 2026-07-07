@@ -1,61 +1,120 @@
-import { Navigate, Outlet } from "react-router-dom";
-// import useServerCheck from "../../hooks/useServerCheck";
-import { useContext, useEffect } from "react";
-import { UserContext } from "../../context/Context";
+import { Link, useNavigate } from "react-router-dom";
+import { useState } from "react";
 import api from "../../services/api";
-import { useQuery, useQueryClient } from "@tanstack/react-query";
+import style from "./style.module.css";
+import { Toaster, toast } from "sonner";
 
-const PrivateRouter = () => {
-  console.log("PrivateRouter renderizou");
-  //   useServerCheck();
+const Login = () => {
+  const [formData, setFormData] = useState({
+    email: "",
+    senha: "",
+  });
+  const navigate = useNavigate();
 
-  if (!localStorage.getItem("token")) {
-    return <Navigate to="/" />;
-  }
-  // const { user, logUser } = useContext(UserContext);
+  const saveToken = (token) => {
+    const expiration = Date.now() + 60 * 60 * 24000; // 24 horas em milissegundos
+    localStorage.setItem("token", token);
+    localStorage.setItem("token_expiration", expiration.toString());
+  };
 
-  const getCurrentUser = async () => {
-    const token = localStorage.getItem("token");
+  const handleChange = (e) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value,
+    });
+  };
 
-    if (!token) {
-      throw new Error("Token não encontrado");
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    if (!formData.email || !formData.senha) {
+      alert("Por favor, preencha todos os campos!");
+      toast.warning("Preencha todos os campos!");
+      return;
     }
 
     try {
-      const response = await api.get("api/users/me", {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
+      const response = await api.post("/api/users/login", {
+        email: formData.email,
+        senha: formData.senha,
       });
 
-      return response.data;
-    } catch (err) {
-      localStorage.removeItem("token");
-      throw err; // importante!
+      console.log("Login realizado com sucesso:", response.data);
+
+      // Salvar token se necessário
+      toast.success("Login realizado com sucesso!");
+
+      if (response.data.token) {
+        saveToken(response.data.token);
+      }
+
+      setFormData({ email: "", senha: "" });
+      navigate("/home");
+    } catch (error) {
+      console.error("Erro ao fazer login:", error);
+      alert("Email ou senha incorretos!");
+      toast.error("Email ou senha incorretos!");
     }
   };
-  // getCurrentUser();
-  // console.log("Antes do useQuery");
-const {
-  data: user,
-  isPending,
-  isError,
-} = useQuery({
-  queryKey: ["me"],
-  queryFn: getCurrentUser,
-  retry: false,
-});
 
-if (isPending) {
-  return <div>Carregando...</div>;
-}
+  //   const handleForm = (e) => {
+  //     e.preventDefault();
+  //     if (Object.values(loginData).some((field) => !field)) {
+  //       setTextNotification(
+  //         "Por favor, preencha todos os campos antes de continuar. ✍️"
+  //       );
+  //       setResetKey((prev) => prev + 1);
+  //       return;
+  //     }
+  //     loginUser(loginData).then(() => {
+  //       setTimeout(() => {
+  //         navigate("/chats");
+  //       }, 3000);
+  //     });
+  //   };
 
-if (isError) {
-  localStorage.removeItem("token");
-  return <Navigate to="/" replace />;
-}
+  return (
+    <main className={style.container}>
+      <div className={style.header}>
+        <h1>Entrar</h1>
+      </div>
 
-return <Outlet />;
+      <form className={style.form} onSubmit={handleSubmit}>
+        <div className={style.formGroup}>
+          <label htmlFor="email">Email</label>
+          <input
+            type="email"
+            id="email"
+            name="email"
+            value={formData.email}
+            onChange={handleChange}
+            placeholder="seu@email.com"
+            required
+          />
+        </div>
+
+        <div className={style.formGroup}>
+          <label htmlFor="senha">Senha</label>
+          <input
+            type="password"
+            id="senha"
+            name="senha"
+            value={formData.senha}
+            onChange={handleChange}
+            placeholder="Digite sua senha"
+            required
+          />
+        </div>
+
+        <button type="submit">Entrar</button>
+      </form>
+
+      <div className={style.footer}>
+        <p>Não tem uma conta?</p>
+        <Link to="/register">Criar uma nova conta</Link>
+      </div>
+    </main>
+  );
 };
 
-export default PrivateRouter;
+export default Login;

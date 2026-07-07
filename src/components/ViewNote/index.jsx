@@ -1,7 +1,6 @@
 
 import React, { useContext, useState } from "react";
 import { UserContext } from "../../context/Context";
-import {useQueryClient} from "@tanstack/react-query";
 import style from "./style.module.css";
 import api from '../../services/api';
 import { toast } from "sonner";
@@ -20,8 +19,6 @@ const formatDate = (dateString) => {
 };
 
 const ViewNote = () => {
-  const queryClient = useQueryClient();
-
   const { openNote, setOpenNote, openNoteData } = useContext(UserContext);
   const [editMode, setEditMode] = useState(false);
   const [editedContent, setEditedContent] = useState(openNoteData.content || []);
@@ -42,8 +39,8 @@ const ViewNote = () => {
       const response = await api.delete(`api/notes/${openNoteData.id}`);
       if (response.status === 200) {
         handleClose();
-       queryClient.invalidateQueries(['notes']);
-       toast.success("Nota deletada com sucesso!");
+        window.location.reload(); // Recarrega a página para atualizar a lista de notas
+        // toast.success("Nota deletada com sucesso!");
       }
     } catch (error) {
       console.error("Erro ao deletar nota:", error);

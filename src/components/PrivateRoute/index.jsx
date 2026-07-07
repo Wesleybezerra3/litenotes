@@ -32,6 +32,7 @@ const PrivateRouter = () => {
       } catch (err) {
         if (localStorage.getItem("token")) {
           localStorage.removeItem("token");
+          localStorage.removeItem("token_expiration");
         }
       }
     };
