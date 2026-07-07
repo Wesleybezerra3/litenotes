@@ -1,4 +1,4 @@
-import { createContext, useState } from "react";
+import { createContext, useState, useEffect } from "react";
 
 export const UserContext = createContext();
 
@@ -8,13 +8,20 @@ export const AppProvider = ({ children }) => {
     nome: "",
   });
    const [activeRoute, setActiveRoute] = useState("");
+   const [openNote, setOpenNote] = useState(null);
+   const [openNoteData, setOpenNoteData] = useState({});
+
+  useEffect(() => {
+    console.log("openNote:", openNote);
+    console.log("openNoteData:", openNoteData);
+  },[openNote, openNoteData])
 
   // useEffect(()=>{
 
   // },[onUpdate])
   const logUser = (userData) => setUser(userData);
   return (
-    <UserContext.Provider value={{ user, logUser, activeRoute, setActiveRoute }}>
+    <UserContext.Provider value={{ user, logUser, activeRoute, setActiveRoute, openNote, setOpenNote, openNoteData, setOpenNoteData }}>
         {children}
     </UserContext.Provider>
   );
