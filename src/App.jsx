@@ -15,17 +15,22 @@ import Trash from "./pages/TrashPage";
 import Favorites from "./pages/Favorites";
 import NotFound from "./pages/NotFound";
 import PrivateRouter from "./components/PrivateRoute";
+import { Toaster } from 'sonner' 
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
 // import {
 //   arrayMove,
 //   SortableContext,
 //   verticalListSortingStrategy,
 // } from "@dnd-kit/sortable";
-
+const queryClient = new QueryClient();
 function App() {
   return (
     <>
-      <Router>
+  
+        <Router>
+          <Toaster expand={true} richColors />
+
         <Routes>
           <Route element={<PrivateRouter />}>
             <Route path="/home" element={<Home />}>

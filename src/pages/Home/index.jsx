@@ -11,6 +11,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { UserContext } from "../../context/Context";
 import logo from "../../assets/logo.svg";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 
 import { DndContext, closestCenter } from "@dnd-kit/core";
 
@@ -27,12 +28,37 @@ import SortableCard from "../../components/SortableCard";
 import { Link, Outlet, useLocation } from "react-router-dom";
 
 const Home = () => {
-  const [notes, setNotes] = useState([]);
+  const queryClient = useQueryClient();
+
   const [modalVisible, setModalVisible] = useState(false);
-  const { user, activeRoute, setActiveRoute } = useContext(UserContext);
+  const { activeRoute, setActiveRoute } = useContext(UserContext);
+
+  const getCurrentUser = async () => {
+    try {
+      const token = localStorage.getItem("token");
+      if (token) {
+        const response = await api.get("api/users/me", {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+        const user = response.data;
+        logUser((prevUser) => ({ ...prevUser, ...user }));
+        console.log(user);
+      }
+    } catch (err) {
+      if (localStorage.getItem("token")) {
+        localStorage.removeItem("token");
+      }
+    }
+  };
+
+  const { data: user } = useQuery({
+    queryKey: ["me"],
+    queryFn: getCurrentUser,
+  });
 
   const location = useLocation();
-
 
   useEffect(() => {
     const route = location.pathname.split("/")[2];
@@ -40,50 +66,11 @@ const Home = () => {
     setActiveRoute(route);
   }, [location.pathname]);
 
-  useEffect(() => {
-    console.log(user);
-    const getNotes = async () => {
-      try {
-        //  const token = localStorage.getItem("token");
-        const response = await api.get("api/notes");
-
-        const data = response.data;
-
-        const normalized = Array.isArray(data)
-          ? data.reverse()
-          : data?.notes?.reverse() || [];
-
-        setNotes(normalized);
-      } catch (error) {
-        console.error(error);
-      }
-    };
-
-    getNotes();
-  }, []);
-
-  const handleDragEnd = (event) => {
-    const { active, over } = event;
-
-    if (!over) return;
-
-    if (active.id !== over.id) {
-      setNotes((items) => {
-        const oldIndex = items.findIndex((item) => item.id === active.id);
-
-        const newIndex = items.findIndex((item) => item.id === over.id);
-
-        return arrayMove(items, oldIndex, newIndex);
-      });
-    }
-  };
-
   const logout = () => {
     localStorage.removeItem("token");
     window.location.reload();
   };
 
- 
   return (
     <>
       <ModalNote
@@ -173,38 +160,45 @@ const Home = () => {
                 <FontAwesomeIcon icon={faUser} color="#fff" size="1x" />
               </div>
               <div className={style.infoProfile}>
-                <h3>{user.nome}</h3>
+                {/* <h3>{user.nome}</h3> */}
                 <p>email@example.com</p>
               </div>
-
             </div>
             <div className={style.btnLogout}>
-                <button onClick={logout}>
-                  <FontAwesomeIcon icon={faSignOutAlt} className={style.icon} />
-                </button>
-              </div>
+              <button onClick={logout}>
+                <FontAwesomeIcon icon={faSignOutAlt} className={style.icon} />
+              </button>
+            </div>
           </aside>
         </div>
 
         <div className={style.containerContent}>
           <div className={style.headerContent}>
-            <p>👋 Bem-vindo, {user.nome.split(" ")[0]}!</p>
+            {/* <p>👋 Bem-vindo, {user.nome.split(" ")[0]}!</p> */}
           </div>
           <div className={style.titlePage}>
-            <h1>{activeRoute === "recent-notes" ? "Notas Recentes" : activeRoute === "favorites" ? "Favoritos" : "Lixeira"}</h1>
+            <h1>
+              {activeRoute === "recent-notes"
+                ? "Notas Recentes"
+                : activeRoute === "favorites"
+                  ? "Favoritos"
+                  : "Lixeira"}
+            </h1>
           </div>
           <div className={style.containerSearch}>
             <div className={style.search}>
               <div className={style.containerIcon}>
-              <FontAwesomeIcon icon={faSearch} />
-
+                <FontAwesomeIcon icon={faSearch} />
               </div>
               <input type="text" placeholder="Pesquisar nota..." />
             </div>
 
-              <button className={style.btnNoteNew} onClick={() => setModalVisible(true)}>
-                + Adicionar nota
-              </button>
+            <button
+              className={style.btnNoteNew}
+              onClick={() => setModalVisible(true)}
+            >
+              + Adicionar nota
+            </button>
           </div>
           <Outlet />
         </div>
