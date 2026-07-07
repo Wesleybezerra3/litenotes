@@ -3,6 +3,7 @@ import SortableCard from "../../components/SortableCard";
 import api from "../../services/api";
 import style from "./style.module.css";
 import { DndContext, closestCenter } from "@dnd-kit/core";
+import {useQuery, useQueryClient} from "@tanstack/react-query";
 import { UserContext } from "../../context/Context";
 
 
@@ -21,29 +22,15 @@ import ViewNote from "../../components/ViewNote";
 
 
 const RecentNotes = () => {
-  const [notes, setNotes] = useState([]);
+  const queryClient = useQueryClient();
   const { openNote,setOpenNote, openNoteData, setOpenNoteData } = useContext(UserContext);
+  const[orderedNotes, setOrderedNotes] = useState([]);
+  
+
 
   useEffect(() => {
-    const getNotes = async () => {
-      try {
-        const response = await api.get("api/notes");
-
-        const data = response.data;
-
-        const normalized = Array.isArray(data)
-          ? data.reverse()
-          : data?.notes?.reverse() || [];
-
-        setNotes(normalized);
-        console.log("Notas recentes:", normalized);
-      } catch (error) {
-        console.error(error);
-      }
-    };
-
-    getNotes();
-  }, []);
+  setOrderedNotes(notes);
+}, [notes]);
 
   const handleDragEnd = (event) => {
     const { active, over } = event;
@@ -51,7 +38,7 @@ const RecentNotes = () => {
     if (!over) return;
 
     if (active.id !== over.id) {
-      setNotes((items) => {
+      setOrderedNotes((items) => {
         const oldIndex = items.findIndex((item) => item.id === active.id);
 
         const newIndex = items.findIndex((item) => item.id === over.id);
@@ -78,8 +65,8 @@ const RecentNotes = () => {
           onDragEnd={handleDragEnd}
           modifiers={[restrictToParentElement, restrictToWindowEdges]}
         >
-          <SortableContext items={notes} strategy={verticalListSortingStrategy}>
-            {notes.length === 0 ? (
+          <SortableContext items={orderedNotes} strategy={verticalListSortingStrategy}>
+            {orderedNotes.length === 0 ? (
               <NotCreateNote
                 title="Nenhuma nota por aqui"
                 subtitle="Você ainda não criou nenhuma nota."
@@ -87,7 +74,7 @@ const RecentNotes = () => {
               />
             ) : (
               <div className={style.cardsNotes}>
-                {notes.map((note) => (
+                {orderedNotes.map((note) => (
                   <SortableCard
                     key={note.id}
                     note={note}
