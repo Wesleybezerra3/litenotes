@@ -33,30 +33,30 @@ const Home = () => {
   const [modalVisible, setModalVisible] = useState(false);
   const { activeRoute, setActiveRoute } = useContext(UserContext);
 
-  const getCurrentUser = async () => {
-    try {
-      const token = localStorage.getItem("token");
-      if (token) {
-        const response = await api.get("api/users/me", {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
-        const user = response.data;
-        logUser((prevUser) => ({ ...prevUser, ...user }));
-        console.log(user);
-      }
-    } catch (err) {
-      if (localStorage.getItem("token")) {
-        localStorage.removeItem("token");
-      }
-    }
-  };
+  // const getCurrentUser = async () => {
+  //   try {
+  //     const token = localStorage.getItem("token");
+  //     if (token) {
+  //       const response = await api.get("api/users/me", {
+  //         headers: {
+  //           Authorization: `Bearer ${token}`,
+  //         },
+  //       });
+  //       const user = response.data;
+  //       logUser((prevUser) => ({ ...prevUser, ...user }));
+  //       console.log(user);
+  //     }
+  //   } catch (err) {
+  //     if (localStorage.getItem("token")) {
+  //       localStorage.removeItem("token");
+  //     }
+  //   }
+  // };
 
-  const { data: user } = useQuery({
-    queryKey: ["me"],
-    queryFn: getCurrentUser,
-  });
+  // const { data: user } = useQuery({
+  //   queryKey: ["me"],
+  //   queryFn: getCurrentUser,
+  // });
 
   const location = useLocation();
 
